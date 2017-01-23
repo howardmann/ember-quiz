@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Question from '../models/question';
 import Answer from '../models/answer';
+import Vote from '../models/vote';
 
 // Fake server database
 const questions = [];
@@ -11,11 +12,18 @@ let question = Question.create({
   answers: []
 });
 
-question.get('answers').pushObjects([
-  Answer.create({id: '1', name: '45', question: question}),
-  Answer.create({id: '2', name: '55', question: question}),
-  Answer.create({id: '3', name: '65', question: question})
-]);
+let answer1 = Answer.create({id: '1', name: '45', question: question, votes: []});
+let answer2 = Answer.create({id: '2', name: '55', question: question, votes: []});
+let answer3 = Answer.create({id: '3', name: '65', question: question, votes: []});
+
+var vote1 = Vote.create({answer: answer1});
+var vote2 = Vote.create({answer: answer2});
+var vote3 = Vote.create({answer: answer1});
+answer1.get('votes').pushObject(vote1);
+answer2.get('votes').pushObject(vote2);
+answer1.get('votes').pushObject(vote3);
+
+question.get('answers').pushObjects([answer1, answer2, answer3]);
 
 questions.pushObject(question);
 
@@ -26,9 +34,9 @@ question = Question.create({
 });
 
 question.get('answers').pushObjects([
-  Answer.create({id: '4', name: 'Fidel Castro', question: question}),
-  Answer.create({id: '5', name: 'David Bowie', question: question}),
-  Answer.create({id: '6', name: 'Helen Mirren', question: question})
+  Answer.create({id: '4', name: 'Fidel Castro', question: question, votes: []}),
+  Answer.create({id: '5', name: 'David Bowie', question: question, votes: []}),
+  Answer.create({id: '6', name: 'Helen Mirren', question: question, votes: []})
 ]);
 
 questions.pushObject(question);
@@ -40,9 +48,9 @@ question = Question.create({
 });
 
 question.get('answers').pushObjects([
-  Answer.create({id: '7', name: 'Crocodile', question: question}),
-  Answer.create({id: '8', name: 'Koala', question: question}),
-  Answer.create({id: '9', name: 'Kangaroo', question: question})
+  Answer.create({id: '7', name: 'Crocodile', question: question, votes: []}),
+  Answer.create({id: '8', name: 'Koala', question: question, votes: []}),
+  Answer.create({id: '9', name: 'Kangaroo', question: question, votes: []})
 ]);
 
 questions.pushObject(question);
@@ -63,9 +71,9 @@ export default Ember.Service.extend({
     });
 
     question.get('answers').pushObjects([
-      Answer.create({question: question }),
-      Answer.create({question: question }),
-      Answer.create({question: question })
+      Answer.create({question: question, votes: [] }),
+      Answer.create({question: question, votes: [] }),
+      Answer.create({question: question, votes: [] })
     ]);
 
     return question;
@@ -85,5 +93,11 @@ export default Ember.Service.extend({
   saveQuestion(question) {
     questions.pushObject(question);
     question.set('id', questions.length);
+  },
+
+  saveVote(answerName, question) {
+    let answer = question.get('answers').findBy('name', answerName);
+    let vote = Vote.create({answer: answer});
+    answer.get('votes').pushObject(vote);
   }
 });
