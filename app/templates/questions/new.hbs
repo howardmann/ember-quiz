@@ -1,0 +1,16 @@
+<h2>Add new question</h2>
+
+<form {{action 'createQuestion' model on='submit'}}>
+  <label>Name:</label>
+  <!-- <input type="text" name="name" required=true autofocus=true><br> -->
+  {{input type="text" name="name" required=true autofocus=true value=model.name}}<br>
+
+  {{#each model.answers as |answer index|}}
+    <label>Answer {{increment index}}:</label>
+    <!-- <input type="text" name="answer" required=true><br> -->
+    {{input type="text" name="answer" required=true value=answer.name}}<br>
+  {{/each}}
+
+  <br>
+  <input type="submit">
+</form>

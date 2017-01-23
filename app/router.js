@@ -11,6 +11,7 @@ Router.map(function() {
     this.route('question', { path: ':question_id'}, function() {
       this.route('votes');
     });
+    this.route('new');
   });
 });
 

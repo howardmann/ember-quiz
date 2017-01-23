@@ -55,5 +55,35 @@ export default Ember.Service.extend({
 
   getQuestion(id){
     return this.getAllQuestions().findBy('id', id);
+  },
+
+  newQuestion(){
+    const question = Question.create({
+      answers: []
+    });
+
+    question.get('answers').pushObjects([
+      Answer.create({question: question }),
+      Answer.create({question: question }),
+      Answer.create({question: question })
+    ]);
+
+    return question;
+  },
+
+  // saveQuestion using jQuery
+  // saveQuestion(question, name, answersArr){
+  //   question.name = name;
+  //   question.answers.forEach(function(answer, i){
+  //     return answer.name = answersArr[i];
+  //   });
+  //
+  //   questions.pushObject(question);
+  //   question.set('id', questions.length);
+  // }
+  // saveQuestion using ember 2-way data binding
+  saveQuestion(question) {
+    questions.pushObject(question);
+    question.set('id', questions.length);
   }
 });
