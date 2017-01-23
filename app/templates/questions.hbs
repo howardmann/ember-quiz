@@ -1,2 +1,9 @@
-{{outlet}}
 <h2>All questions</h2>
+
+{{#each model as |question|}}
+  <p>{{#link-to 'questions.question' question}} {{question.name}} {{/link-to}}</p>
+{{/each}}
+
+<hr>
+
+{{outlet}}

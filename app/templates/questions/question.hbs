@@ -1,1 +1,11 @@
+<h2>{{model.name}}</h2>
+<form>
+  {{#each model.answers as |answer|}}
+  {{input name="answer" type="radio" value=answer.name}}
+  <label for="">{{answer.name}}</label><br>
+  {{/each}}
+  <br>
+  <input type="submit">
+</form>
+
 {{outlet}}
