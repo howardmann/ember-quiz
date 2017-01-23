@@ -1,4 +1,4 @@
 <h2>Votes</h2>
-{{#each model.answers as |answer|}}
-<p>{{answer.name}}: {{answer.votes.length}} votes</p>
+{{#each model.answers as |answer index|}}
+<p>{{increment index}}. {{answer.name}}: {{answer.votes.length}} votes</p>
 {{/each}}

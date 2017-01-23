@@ -1,9 +1,9 @@
 <h2>{{model.name}}</h2>
 
 <form {{action 'createVote' model on='submit'}}>
-  {{#each model.answers as |answer|}}
+  {{#each model.answers as |answer index|}}
   {{input name="answer" type="radio" value=answer.name}}
-  <label for="">{{answer.name}}</label><br>
+  <label for="">{{increment index}}. {{answer.name}}</label><br>
   {{/each}}
   <br>
   <input type="submit" value="VOTE">
